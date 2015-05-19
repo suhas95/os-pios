@@ -1,0 +1,16 @@
+obj
+.gdbinit
+lab?-handin.tar.gz
+grade-out
+fs
+node?.dump
+*/_*.[ch]
+*~
+
+#if LAB >= 9
+# Patterns applicable only to the instructor's master source tree
+xc
+lab?/
+sol?/
+conf/lab.mk
+#endif

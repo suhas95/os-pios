@@ -1,0 +1,47 @@
+#if LAB >= 99	// XXX reinstate in lab3 or lab4?
+/*
+ * Fork a binary tree of processes and display their structure.
+ *
+ * Copyright (C) 1997 Massachusetts Institute of Technology
+ * See section "MIT License" in the file LICENSES for licensing terms.
+ *
+ * Derived from the MIT Exokernel and JOS.
+ */
+
+#include <inc/lib.h>
+
+#define DEPTH 3
+
+void forktree(const char *cur);
+
+void
+forkchild(const char *cur, char branch)
+{
+	char nxt[DEPTH+1];
+
+	if (strlen(cur) >= DEPTH)
+		return;
+
+	snprintf(nxt, DEPTH+1, "%s%c", cur, branch);
+	if (fork() == 0) {
+		forktree(nxt);
+		exit();
+	}
+}
+
+void
+forktree(const char *cur)
+{
+	cprintf("%04x: I am '%s'\n", sys_getenvid(), cur);
+
+	forkchild(cur, '0');
+	forkchild(cur, '1');
+}
+
+void
+umain(void)
+{
+	forktree("");
+}
+
+#endif
